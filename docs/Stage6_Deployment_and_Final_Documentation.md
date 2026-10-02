@@ -2,22 +2,88 @@
 
 ## 1. Introduction
 
-This stage describes the deployment, execution environment, project structure, source-code organization, and final documentation of the Linux-Based Smart Parking Management System.
+Stage 6 represents the final implementation, deployment, validation, documentation, and presentation stage of the Linux-Based Smart Parking Management System.
 
-The system is developed and executed in a Linux environment using Ubuntu.
+The completed system integrates the C++ parking application, virtual sensors, Linux logging, FIFO IPC, and Linux character-device driver.
+
+This stage documents the final system structure, deployment procedure, testing status, documentation, Git/GitHub integration, achievements, limitations, and future enhancements.
 
 ---
 
-## 2. Deployment Environment
+## 2. Final System Overview
 
-The project is deployed in an Ubuntu Linux environment.
+The completed system provides:
 
-The development environment includes:
+- Vehicle registration.
+- Vehicle parking.
+- Vehicle removal.
+- Vehicle searching.
+- Parking-slot status.
+- Vehicle-type compatible allocation.
+- Waiting-queue management.
+- Automatic queue processing.
+- Parking history.
+- File-based persistence.
+- Virtual parking sensors.
+- Linux-based logging.
+- FIFO inter-process communication.
+- Linux character-device driver.
+- User-space driver testing.
+- Git/GitHub based version control.
+
+---
+
+## 3. Final Architecture
 
 ```text
-Operating System : Ubuntu Linux
-Architecture     : ARM64
-Compiler         : g++
-Build Tool       : GNU Make
-Language         : C++ / C
-Version Control  : Git
+                         USER
+                           |
+                           v
+                +----------------------+
+                |   Main C++ Program   |
+                +----------+-----------+
+                           |
+                           v
+                +----------------------+
+                |    ParkingSystem     |
+                +----------+-----------+
+                           |
+          +----------------+----------------+
+          |                |                |
+          v                v                v
+     Parking Slots    Virtual Sensors   Linux Logger
+          |                                 |
+          v                                 v
+   Waiting Queue                       parking.log
+          |
+          v
+   Parking History
+          |
+          v
+   parking_data.txt
+
+                           |
+                           v
+                     ParkingIPC
+                           |
+                           v
+              /tmp/smart_parking_fifo
+                           |
+                           v
+                   Parking Monitor
+
+
+                  USER SPACE
+--------------------------------------------------
+
+                  Driver Test Program
+                           |
+                           | read/write
+                           v
+                  /dev/smart_parking
+                           |
+                           v
+
+              Linux Character Driver
+
+                  KERNEL SPACE
