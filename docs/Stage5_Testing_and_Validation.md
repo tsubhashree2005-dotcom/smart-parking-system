@@ -2,36 +2,48 @@
 
 ## 1. Introduction
 
-This stage describes the testing and validation performed for the Linux-Based Smart Parking Management System.
+Stage 5 focuses on testing, integration, debugging, validation, and improvement of the Linux-Based Smart Parking Management System.
 
-Testing verifies the functionality of the parking application, virtual sensors, file handling, Linux logging, FIFO IPC, character-device driver, and build system.
+Testing was performed in the Ubuntu Linux environment after implementation of the C++ application, Linux logging, virtual sensors, FIFO IPC, and Linux character-device driver.
+
+The testing process covered both individual components and integrated system functionality.
 
 ---
 
 ## 2. Testing Objectives
 
-The main objectives are:
+The main objectives of testing were:
 
-- Verify parking operations
-- Verify vehicle removal
-- Verify parking-slot allocation
-- Verify vehicle-type compatibility
-- Verify waiting-queue operation
-- Verify parking-history operation
-- Verify file persistence
-- Verify virtual parking sensors
-- Verify Linux logging
-- Verify FIFO IPC
-- Verify character-device driver communication
-- Verify project compilation
+1. Verify successful compilation.
+2. Verify correct execution of the C++ application.
+3. Verify vehicle parking and removal.
+4. Verify compatible-slot allocation.
+5. Verify waiting-queue functionality.
+6. Verify automatic allocation from the waiting queue.
+7. Verify vehicle searching.
+8. Verify parking history.
+9. Verify data persistence.
+10. Verify virtual parking sensors.
+11. Verify Linux logging.
+12. Verify FIFO-based IPC.
+13. Verify Linux kernel-driver compilation.
+14. Verify kernel-module loading.
+15. Verify `/dev/smart_parking`.
+16. Verify driver read/write communication.
+17. Verify integrated system behavior.
+18. Verify the final project build and repository state.
 
 ---
 
-## 3. Build Testing
+## 3. Testing Environment
 
-The project is compiled using the root Makefile.
+Testing was performed in:
 
-The main build command is:
-
-```bash
-make
+```text
+Operating System : Ubuntu Linux
+Architecture     : ARM64
+Compiler         : g++
+C++ Standard     : C++17
+Build System     : GNU Make
+Debugger         : GDB
+Version Control  : Git
