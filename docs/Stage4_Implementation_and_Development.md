@@ -2,34 +2,48 @@
 
 ## 1. Introduction
 
-This stage describes the implementation of the Linux-Based Smart Parking Management System.
+Stage 4 focuses on implementing the Linux-Based Smart Parking Management System according to the architecture and requirements defined in the previous stages.
 
-The system is implemented using C++ for the main application and C for the Linux kernel character-device driver.
+The implementation combines C++ object-oriented programming, STL data structures, file handling, Linux system calls, FIFO inter-process communication, virtual sensors, Linux logging, and a Linux kernel character device driver.
 
-The implementation integrates:
-
-- C++ object-oriented programming
-- STL containers
-- Linked lists
-- Queues
-- Smart pointers
-- File handling
-- Exception handling
-- Virtual parking sensors
-- Linux system calls
-- Linux logging
-- FIFO IPC
-- Linux character device driver
-- Shell scripting
-- Makefile-based compilation
+The implementation is modular so that each major responsibility is handled by a separate component.
 
 ---
 
-## 2. Main Application Implementation
+## 2. Implementation Environment
 
-The main application is implemented using the following files:
+The project was developed and tested in a Linux environment.
+
+| Component | Technology |
+|---|---|
+| Operating System | Ubuntu Linux |
+| Architecture | ARM64 |
+| Programming Language | C++17 |
+| Compiler | g++ |
+| Build System | GNU Make |
+| Kernel Module | C / Linux Kernel API |
+| Debugging | GDB |
+| Version Control | Git |
+| Repository | GitHub |
+
+---
+
+## 3. Source-Code Organization
+
+The main project files are:
 
 ```text
 main.cpp
 parking_system.cpp
 parking_system.h
+parking_sensor.cpp
+parking_sensor.h
+parking_ipc.cpp
+parking_ipc.h
+parking_monitor.cpp
+parking_driver_test.cpp
+linux_logger.cpp
+linux_logger.h
+Makefile
+build.sh
+run.sh
