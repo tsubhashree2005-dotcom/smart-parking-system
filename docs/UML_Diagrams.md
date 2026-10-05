@@ -9,12 +9,15 @@ The diagrams describe the system actors, classes, components, communication flow
 # 1. Use Case Diagram
 
 The Use Case Diagram represents the major operations performed by the parking system user and system administrator.
-```mermaid
+
+mermaid
+
 flowchart LR
 
 USER["Parking System User"]
 
 ADMIN["System Administrator"]
+
 
 
 PARK["Park Vehicle"]
@@ -46,6 +49,7 @@ DEVICE["Test Device Communication"]
 MONITOR["Monitor IPC Messages"]
 
 
+
 USER --> PARK
 
 USER --> REMOVE
@@ -63,6 +67,7 @@ USER --> SENSOR
 USER --> IPC
 
 
+
 ADMIN --> SAVE
 
 ADMIN --> LOAD
@@ -74,7 +79,8 @@ ADMIN --> DRIVER
 ADMIN --> DEVICE
 
 ADMIN --> MONITOR
-```
+
+
 
 ### Main Use Cases
 
@@ -110,13 +116,14 @@ ADMIN --> MONITOR
 
  Administrator | Monitor IPC Messages | Receives messages from the parking application |
 
-```
-
+--
 
 # 2. Class Diagram
 
 The Class Diagram represents the major C++ classes and their relationships.
-```mermaid
+
+mermaid
+
 classDiagram
 
 class Vehicle {
@@ -128,6 +135,7 @@ class Vehicle {
     string type
 
 }
+
 
 
 class ParkingSlot {
@@ -147,6 +155,7 @@ class ParkingSlot {
 }
 
 
+
 class HistoryNode {
 
     Vehicle vehicle
@@ -156,6 +165,7 @@ class HistoryNode {
     HistoryNode next
 
 }
+
 
 
 class ParkingSystem {
@@ -185,6 +195,7 @@ class ParkingSystem {
 }
 
 
+
 class ParkingSensor {
 
     int sensorId
@@ -208,6 +219,7 @@ class ParkingSensor {
 }
 
 
+
 class ParkingIPC {
 
     string fifoPath
@@ -219,6 +231,7 @@ class ParkingIPC {
     receiveStatus()
 
 }
+
 
 
 class LinuxLogger {
@@ -234,6 +247,7 @@ class LinuxLogger {
 }
 
 
+
 class DriverTest {
 
     openDevice()
@@ -245,6 +259,7 @@ class DriverTest {
     closeDevice()
 
 }
+
 
 
 ParkingSystem --> ParkingSlot
@@ -264,7 +279,8 @@ DriverTest --> ParkingIPC
 ParkingSlot --> Vehicle
 
 HistoryNode --> HistoryNode
-```
+
+
 
 ## Class Responsibilities
 
@@ -328,16 +344,18 @@ Provides Linux file-descriptor based logging.
 
 Tests communication with the Linux character device.
 
-```
-
+--
 
 # 3. Component and System Architecture
 
 The following diagram represents the overall system architecture.
-```mermaid
+
+mermaid
+
 flowchart TB
 
 USER["User"]
+
 
 
 MAIN["Smart Parking Application"]
@@ -363,11 +381,13 @@ MONITOR["Parking Monitor"]
 TEST["Driver Test Program"]
 
 
+
 DATA["parking_data.txt"]
 
 LOGFILE["parking.log"]
 
 FIFO["smart parking FIFO"]
+
 
 
 DEVICE["smart parking Device"]
@@ -377,9 +397,11 @@ DRIVER["Linux Character Driver"]
 KERNEL["Linux Kernel"]
 
 
+
 USER --> MAIN
 
 MAIN --> SYSTEM
+
 
 
 SYSTEM --> SLOTS
@@ -397,9 +419,11 @@ SYSTEM --> LOGGER
 SYSTEM --> IPCMODULE
 
 
+
 SYSTEM --> DATA
 
 LOGGER --> LOGFILE
+
 
 
 IPCMODULE --> FIFO
@@ -407,12 +431,14 @@ IPCMODULE --> FIFO
 FIFO --> MONITOR
 
 
+
 TEST --> DEVICE
 
 DEVICE --> DRIVER
 
 DRIVER --> KERNEL
-```
+
+
 
 ## Architecture Layers
 
@@ -420,7 +446,8 @@ DRIVER --> KERNEL
 
 The user-space layer contains the main C++ application and supporting programs.
 
-```
+text
+
 main.cpp
 
 parking_system.cpp
@@ -434,55 +461,55 @@ linux_logger.cpp
 parking_monitor.cpp
 
 parking_driver_test.cpp
-```
+
 
 
 ### Persistent Storage
 
 The project uses files for persistent storage and logging.
 
-```
+text
+
 parking_data.txt
 
 parking.log
-```
+
 
 
 ### IPC Layer
 
 The main application communicates with the separate monitoring process using a Linux named FIFO.
 
-```
+text
+
 /tmp/smart_parking_fifo
-```
+
 
 
 ### Kernel Space
 
 The Linux character device driver provides the kernel-level device interface.
 
-```
-```
+text
+
 parking_driver.ko
-```
 
     |
 
     v
 
-```
 /dev/smart_parking
-```
-```
 
 
-```
 
+--
 
 # 4. Vehicle Parking Sequence Diagram
 
 This sequence shows the major operations performed when a vehicle is parked.
-```mermaid
+
+mermaid
+
 sequenceDiagram
 
 actor User
@@ -500,6 +527,7 @@ participant Logger as LinuxLogger
 participant Data as Parking Data
 
 
+
 User->>Main: Select Park Vehicle
 
 Main->>System: parkVehicle
@@ -507,6 +535,7 @@ Main->>System: parkVehicle
 System->>System: Validate vehicle
 
 System->>Slot: Find compatible slot
+
 
 
 alt Slot available
@@ -540,13 +569,17 @@ else No slot available
 end
 
 
-```
-```
+
+
+
+--
 
 # 5. Vehicle Removal Sequence Diagram
 
 This sequence represents vehicle removal and waiting queue processing.
-```mermaid
+
+mermaid
+
 sequenceDiagram
 
 actor User
@@ -566,11 +599,13 @@ participant Logger as LinuxLogger
 participant Data as Parking Data
 
 
+
 User->>Main: Select Remove Vehicle
 
 Main->>System: removeVehicle
 
 System->>Slot: Search vehicle
+
 
 
 alt Vehicle found
@@ -586,6 +621,7 @@ alt Vehicle found
     System->>System: Add record to history
 
     System->>Queue: Check waiting queue
+
 
 
     alt Waiting vehicle exists
@@ -605,6 +641,7 @@ alt Vehicle found
     end
 
 
+
     System->>Logger: Log removal
 
     System->>Data: Save updated data
@@ -612,6 +649,7 @@ alt Vehicle found
     System-->>Main: Removal successful
 
     Main-->>User: Display updated status
+
 
 
 else Vehicle not found
@@ -623,13 +661,15 @@ else Vehicle not found
 end
 
 
-```
-```
+
+--
 
 # 6. FIFO IPC Sequence Diagram
 
 This sequence represents communication between the main parking application and the monitoring process.
-```mermaid
+
+mermaid
+
 sequenceDiagram
 
 participant Main as Smart Parking Application
@@ -641,6 +681,7 @@ participant FIFO as Linux FIFO
 participant Monitor as Parking Monitor
 
 
+
 Monitor->>FIFO: Open FIFO for reading
 
 Main->>IPC: Send parking status
@@ -650,9 +691,12 @@ IPC->>FIFO: Write status message
 FIFO-->>Monitor: Status message
 
 Monitor->>Monitor: Display message
-```
+
+
 
 Example message:
+
+text
 
 SMART PARKING STATUS
 
@@ -665,13 +709,15 @@ Free=5
 Waiting=0
 
 
-```
 
+--
 
 # 7. Linux Character Device Driver Sequence Diagram
 
 This sequence represents communication between the user-space driver test program and the Linux kernel driver.
-```mermaid
+
+mermaid
+
 sequenceDiagram
 
 participant Test as Driver Test Program
@@ -683,11 +729,13 @@ participant Driver as Linux Character Driver
 participant Kernel as Linux Kernel
 
 
+
 Test->>Device: open
 
 Device->>Driver: Open request
 
 Driver->>Kernel: Access driver buffer
+
 
 
 Test->>Device: write
@@ -699,6 +747,7 @@ Driver->>Kernel: Copy data from user
 Kernel-->>Driver: Data stored
 
 
+
 Test->>Device: read
 
 Device->>Driver: Read request
@@ -708,6 +757,7 @@ Driver->>Kernel: Copy data to user
 Kernel-->>Driver: Data returned
 
 
+
 Device-->>Test: Driver data
 
 Test->>Device: close
@@ -715,13 +765,15 @@ Test->>Device: close
 Device->>Driver: Release
 
 
-```
-```
+
+--
 
 # 8. System Data Flow
 
 The following diagram represents the overall data flow.
-```mermaid
+
+mermaid
+
 flowchart LR
 
 INPUT["User Input"]
@@ -749,9 +801,11 @@ IPC["FIFO IPC"]
 MONITOR["Parking Monitor"]
 
 
+
 INPUT --> VALIDATE
 
 VALIDATE --> SYSTEM
+
 
 
 SYSTEM --> SLOTS
@@ -773,13 +827,15 @@ SYSTEM --> IPC
 IPC --> MONITOR
 
 
-```
-```
+
+--
 
 # 9. Linux Kernel Interaction
 
 The project demonstrates communication between user space and kernel space using a Linux character device driver.
-```mermaid
+
+mermaid
+
 flowchart TB
 
 APP["User Space Application"]
@@ -795,6 +851,7 @@ KERNEL["Linux Kernel"]
 SYSTEM["Linux System"]
 
 
+
 APP --> TEST
 
 TEST --> DEVICE
@@ -804,7 +861,8 @@ DEVICE --> DRIVER
 DRIVER --> KERNEL
 
 KERNEL --> SYSTEM
-```
+
+
 
 The character driver provides:
 
@@ -828,23 +886,26 @@ The character driver provides:
 
 The device is exposed to user space as:
 
-```
+text
+
 /dev/smart_parking
-```
+
 
 
 The kernel module is:
 
-```
+text
+
 parking_driver.ko
-```
 
 
-```
 
+--
 
 # 10. Overall System Workflow
-```mermaid
+
+mermaid
+
 flowchart TD
 
 START["Start System"]
@@ -876,6 +937,7 @@ SAVE["Save Data"]
 EXIT["Exit System"]
 
 
+
 START --> LOAD
 
 LOAD --> MENU
@@ -883,6 +945,7 @@ LOAD --> MENU
 MENU --> INPUT
 
 INPUT --> VALIDATE
+
 
 
 VALIDATE --> PARK
@@ -900,6 +963,7 @@ VALIDATE --> QUEUE
 VALIDATE --> SENSOR
 
 
+
 PARK --> SAVE
 
 REMOVE --> SAVE
@@ -907,6 +971,7 @@ REMOVE --> SAVE
 QUEUE --> SAVE
 
 SENSOR --> SAVE
+
 
 
 SAVE --> MENU
@@ -918,23 +983,24 @@ STATUS --> MENU
 HISTORY --> MENU
 
 
+
 INPUT --> EXIT
 
 
-```
-```
+
+--
 
 # 11. Linux Device Driver Workflow
-```mermaid
+
+mermaid
+
 flowchart LR
 
 SOURCE["parking_driver.c"]
 
 BUILD["Kernel Module Build"]
 
-MODULE["```
-parking_driver.ko
-```"]
+MODULE["parking_driver.ko"]
 
 LOAD["insmod"]
 
@@ -947,6 +1013,7 @@ READ["read"]
 WRITE["write"]
 
 UNLOAD["rmmod"]
+
 
 
 SOURCE --> BUILD
@@ -966,10 +1033,10 @@ TEST --> WRITE
 DEVICE --> UNLOAD
 
 
-```
-```
 
-# 12. IOCTL Device-Control Design
+--
+
+**# 12. IOCTL Device-Control Design
 
 The Linux character-device driver provides an ioctl interface defined in:
 
@@ -978,19 +1045,33 @@ kernel_driver/parking_ioctl.h
 The supported commands are:
 
 
+
+
+
+
+
 IOCTL Command
+
 
 
 Purpose
 
 
+
+
+
 SMART_PARKING_IOCTL_GET_BUFFER_SIZE
+
 
 
 Returns the current device-buffer size
 
 
+
+
+
 SMART_PARKING_IOCTL_CLEAR_BUFFER
+
 
 
 Clears the device buffer and resets its size
@@ -1004,6 +1085,9 @@ Buffer size after clear: 0 bytes
 IOCTL TEST SUCCESSFUL
 
 
+
+
+
 14. Automated Testing Architecture
 
 The project includes a dedicated automated C++ test suite for validating core parking functionality.
@@ -1015,22 +1099,31 @@ tests/test_parking_system.cpp
 The automated suite covers:
 
 
+
+
+
 Vehicle parking.
+
 
 
 Vehicle removal.
 
 
+
 Waiting queue behavior.
+
 
 
 Automatic waiting-queue allocation.
 
 
+
 Data persistence.
 
 
+
 Virtual parking sensor behavior.
+
 
 
 Invalid vehicle validation.
@@ -1042,6 +1135,9 @@ Failed : 0
 ALL TESTS PASSED
 
 The automated tests validate the application layer independently from the kernel-driver test application.
+
+
+
 
 
 13. Project Data Structures**
@@ -1066,6 +1162,8 @@ The project uses multiple data structures.
 
 Parking slots are maintained using a C++ vector.
 
+text
+
 ParkingSystem
 
   |
@@ -1081,9 +1179,12 @@ ParkingSystem
   +---- Slot 5
 
 
+
 ### Queue
 
 Vehicles that cannot immediately be parked are placed into the waiting queue.
+
+text
 
 Front
 
@@ -1098,11 +1199,13 @@ Vehicle A -> Vehicle B -> Vehicle C
                          Rear
 
 
+
 ### Linked List
 
 Parking history is maintained using linked-list nodes.
 
-```
+text
+
 History Head
 
  |
@@ -1114,13 +1217,15 @@ History Head
  Vehicle | --> | Vehicle | --> | Vehicle |
 
 +---------+     +---------+     +---------+
-```
+
 
 
 --
 
-# 13. Linux User Space and Kernel Space
-```mermaid
+# 14. Linux User Space and Kernel Space
+
+mermaid
+
 flowchart TB
 
 subgraph USERSPACE["USER SPACE"]
@@ -1134,6 +1239,7 @@ subgraph USERSPACE["USER SPACE"]
 end
 
 
+
 subgraph KERNELSPACE["KERNEL SPACE"]
 
     DRIVER["Linux Character Driver"]
@@ -1143,6 +1249,7 @@ subgraph KERNELSPACE["KERNEL SPACE"]
 end
 
 
+
 APP --> DRIVERTEST
 
 DRIVERTEST --> DRIVER
@@ -1150,14 +1257,14 @@ DRIVERTEST --> DRIVER
 DRIVER --> KERNEL
 
 APP --> MONITOR
-```
+
+
 
 The architecture separates normal application execution from privileged kernel-level driver execution.
 
-```
+--
 
-
-# 14. Training Concepts Demonstrated
+# 15. Training Concepts Demonstrated
 
 The project demonstrates the following training concepts.
 
@@ -1269,7 +1376,7 @@ The project demonstrates the following training concepts.
 
 --
 
-# 15. UML and Architecture Summary
+# 16. UML and Architecture Summary
 
  Diagram | Purpose |
 
@@ -1303,11 +1410,13 @@ The project demonstrates the following training concepts.
 
 --
 
-# 16. Conclusion
+# 17. Conclusion
 
 The Linux-Based Smart Parking Management System integrates application-level programming with Linux system programming and kernel-level device-driver concepts.
 
 The overall architecture can be summarized as:
+
+text
 
 C++ Application
 
@@ -1341,9 +1450,7 @@ C++ Application
 
    |
 
-   +-- ```
-/dev/smart_parking
-```
+   +-- /dev/smart_parking
 
    |
 
@@ -1352,6 +1459,7 @@ C++ Application
    |
 
    +-- Linux Kernel
+
 
 
 The UML diagrams provide a complete design representation of the project's functional behavior, software structure, communication mechanisms, data flow, and Linux kernel interaction.
