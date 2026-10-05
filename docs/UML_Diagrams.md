@@ -23,219 +23,41 @@ The Use Case Diagram represents the major operations performed by the parking sy
 
 
 ```mermaid
-
-
-
 flowchart LR
-
-
-
-USER["Parking System User"]
-
-
-
-ADMIN["System Administrator"]
-
-
-
-
-
-
-
-PARK["Park Vehicle"]
-
-
-
-REMOVE["Remove Vehicle"]
-
-
-
-SEARCH["Search Vehicle"]
-
-
-
-STATUS["View Parking Status"]
-
-
-
-HISTORY["View Parking History"]
-
-
-
-QUEUE["Manage Waiting Queue"]
-
-
-
-SENSOR["Use Virtual Sensors"]
-
-
-
-IPC["Send IPC Status"]
-
-
-
-SAVE["Save Parking Data"]
-
-
-
-LOAD["Load Parking Data"]
-
-
-
-LOG["View System Logs"]
-
-
-
-DRIVER["Manage Linux Driver"]
-
-
-
-DEVICE["Test Device Communication"]
-
-
-
-MONITOR["Monitor IPC Messages"]
-
-
-
-
-
-
-
-USER --> PARK
-
-
-
-USER --> REMOVE
-
-
-
-USER --> SEARCH
-
-
-
-USER --> STATUS
-
-
-
-USER --> HISTORY
-
-
-
-USER --> QUEUE
-
-
-
-USER --> SENSOR
-
-
-
-USER --> IPC
-
-
-
-
-
-
-
-ADMIN --> SAVE
-
-
-
-ADMIN --> LOAD
-
-
-
-ADMIN --> LOG
-
-
-
-ADMIN --> DRIVER
-
-
-
-ADMIN --> DEVICE
-
-
-
-ADMIN --> MONITOR
-
-
-
-
-
-
-
-**### Main Use Cases**
-
-
-
-&#x20;Actor | Use Case | Description |
-
-
-
-\---|---|---|
-
-
-
-&#x20;User | Park Vehicle | Parks a vehicle in a compatible available slot |
-
-
-
-&#x20;User | Remove Vehicle | Removes a vehicle from its parking slot |
-
-
-
-&#x20;User | Search Vehicle | Searches for a vehicle in the system |
-
-
-
-&#x20;User | View Parking Status | Displays occupied and available slots |
-
-
-
-&#x20;User | View Parking History | Displays previous parking records |
-
-
-
-&#x20;User | Manage Waiting Queue | Maintains vehicles waiting for available slots |
-
-
-
-&#x20;User | Use Virtual Sensors | Simulates parking slot occupancy |
-
-
-
-&#x20;User | Send IPC Status | Sends system status through FIFO IPC |
-
-
-
-&#x20;Administrator | Save Parking Data | Saves parking information to persistent storage |
-
-
-
-&#x20;Administrator | Load Parking Data | Loads previously saved parking information |
-
-
-
-&#x20;Administrator | View System Logs | Reviews Linux system activity logs |
-
-
-
-&#x20;Administrator | Manage Linux Driver | Builds, loads and unloads the kernel driver |
-
-
-
-&#x20;Administrator | Test Device Communication | Tests the character device |
-
-
-
-&#x20;Administrator | Monitor IPC Messages | Receives messages from the parking application |
-
-
-
+    A["Parking System User"]
+    B["System Administrator"]
+    C["Park Vehicle"]
+    D["Remove Vehicle"]
+    E["Search Vehicle"]
+    F["View Parking Status"]
+    G["View Parking History"]
+    H["Manage Waiting Queue"]
+    I["Use Virtual Sensors"]
+    J["Send IPC Status"]
+
+    K["Save Parking Data"]
+    L["Load Parking Data"]
+    M["View System Logs"]
+    N["Manage Linux Driver"]
+    O["Test Device Communication"]
+    P["Monitor IPC Messages"]
+
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+    A --> G
+    A --> H
+    A --> I
+    A --> J
+
+    B --> K
+    B --> L
+    B --> M
+    B --> N
+    B --> O
+    B --> P
 ```
-\--
 
 
 
