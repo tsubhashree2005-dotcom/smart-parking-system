@@ -10,8 +10,7 @@ The diagrams describe the system actors, classes, components, communication flow
 
 The Use Case Diagram represents the major operations performed by the parking system user and system administrator.
 
-mermaid
-
+```mermaid
 flowchart LR
 
 USER["Parking System User"]
@@ -116,14 +115,14 @@ ADMIN --> MONITOR
 
  Administrator | Monitor IPC Messages | Receives messages from the parking application |
 
---
+```
+
 
 # 2. Class Diagram
 
 The Class Diagram represents the major C++ classes and their relationships.
 
-mermaid
-
+```mermaid
 classDiagram
 
 class Vehicle {
@@ -344,14 +343,14 @@ Provides Linux file-descriptor based logging.
 
 Tests communication with the Linux character device.
 
---
+```
+
 
 # 3. Component and System Architecture
 
 The following diagram represents the overall system architecture.
 
-mermaid
-
+```mermaid
 flowchart TB
 
 USER["User"]
@@ -502,14 +501,14 @@ parking_driver.ko
 
 
 
---
+```
+
 
 # 4. Vehicle Parking Sequence Diagram
 
 This sequence shows the major operations performed when a vehicle is parked.
 
-mermaid
-
+```mermaid
 sequenceDiagram
 
 actor User
@@ -572,14 +571,14 @@ end
 
 
 
---
+```
+
 
 # 5. Vehicle Removal Sequence Diagram
 
 This sequence represents vehicle removal and waiting queue processing.
 
-mermaid
-
+```mermaid
 sequenceDiagram
 
 actor User
@@ -662,14 +661,14 @@ end
 
 
 
---
+```
+
 
 # 6. FIFO IPC Sequence Diagram
 
 This sequence represents communication between the main parking application and the monitoring process.
 
-mermaid
-
+```mermaid
 sequenceDiagram
 
 participant Main as Smart Parking Application
@@ -710,14 +709,14 @@ Waiting=0
 
 
 
---
+```
+
 
 # 7. Linux Character Device Driver Sequence Diagram
 
 This sequence represents communication between the user-space driver test program and the Linux kernel driver.
 
-mermaid
-
+```mermaid
 sequenceDiagram
 
 participant Test as Driver Test Program
@@ -766,14 +765,14 @@ Device->>Driver: Release
 
 
 
---
+```
+
 
 # 8. System Data Flow
 
 The following diagram represents the overall data flow.
 
-mermaid
-
+```mermaid
 flowchart LR
 
 INPUT["User Input"]
@@ -828,14 +827,14 @@ IPC --> MONITOR
 
 
 
---
+```
+
 
 # 9. Linux Kernel Interaction
 
 The project demonstrates communication between user space and kernel space using a Linux character device driver.
 
-mermaid
-
+```mermaid
 flowchart TB
 
 APP["User Space Application"]
@@ -900,12 +899,12 @@ parking_driver.ko
 
 
 
---
+```
+
 
 # 10. Overall System Workflow
 
-mermaid
-
+```mermaid
 flowchart TD
 
 START["Start System"]
@@ -988,12 +987,12 @@ INPUT --> EXIT
 
 
 
---
+```
+
 
 # 11. Linux Device Driver Workflow
 
-mermaid
-
+```mermaid
 flowchart LR
 
 SOURCE["parking_driver.c"]
@@ -1034,7 +1033,8 @@ DEVICE --> UNLOAD
 
 
 
---
+```
+
 
 **# 12. IOCTL Device-Control Design
 
@@ -1224,8 +1224,7 @@ History Head
 
 # 14. Linux User Space and Kernel Space
 
-mermaid
-
+```mermaid
 flowchart TB
 
 subgraph USERSPACE["USER SPACE"]
@@ -1262,7 +1261,8 @@ APP --> MONITOR
 
 The architecture separates normal application execution from privileged kernel-level driver execution.
 
---
+```
+
 
 # 15. Training Concepts Demonstrated
 
