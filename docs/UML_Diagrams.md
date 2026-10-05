@@ -13,11 +13,10 @@ The Use Case Diagram represents the major operations performed by the parking sy
 
 
 
+```mermaid
 flowchart LR
-
-
-
 USER["Parking System User"]
+```
 
 
 
