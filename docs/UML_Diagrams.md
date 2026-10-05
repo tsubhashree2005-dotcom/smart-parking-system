@@ -78,8 +78,7 @@ ADMIN --> DRIVER
 ADMIN --> DEVICE
 
 ADMIN --> MONITOR
-
-
+```
 
 ### Main Use Cases
 
@@ -115,7 +114,6 @@ ADMIN --> MONITOR
 
  Administrator | Monitor IPC Messages | Receives messages from the parking application |
 
-```
 
 
 # 2. Class Diagram
@@ -278,8 +276,7 @@ DriverTest --> ParkingIPC
 ParkingSlot --> Vehicle
 
 HistoryNode --> HistoryNode
-
-
+```
 
 ## Class Responsibilities
 
@@ -343,7 +340,6 @@ Provides Linux file-descriptor based logging.
 
 Tests communication with the Linux character device.
 
-```
 
 
 # 3. Component and System Architecture
@@ -436,8 +432,7 @@ TEST --> DEVICE
 DEVICE --> DRIVER
 
 DRIVER --> KERNEL
-
-
+```
 
 ## Architecture Layers
 
@@ -501,7 +496,6 @@ parking_driver.ko
 
 
 
-```
 
 
 # 4. Vehicle Parking Sequence Diagram
@@ -554,6 +548,7 @@ alt Slot available
     System-->>Main: Parking successful
 
     Main-->>User: Display assigned slot
+```
 
 else No slot available
 
@@ -571,7 +566,6 @@ end
 
 
 
-```
 
 
 # 5. Vehicle Removal Sequence Diagram
@@ -648,8 +642,7 @@ alt Vehicle found
     System-->>Main: Removal successful
 
     Main-->>User: Display updated status
-
-
+```
 
 else Vehicle not found
 
@@ -661,7 +654,6 @@ end
 
 
 
-```
 
 
 # 6. FIFO IPC Sequence Diagram
@@ -690,8 +682,7 @@ IPC->>FIFO: Write status message
 FIFO-->>Monitor: Status message
 
 Monitor->>Monitor: Display message
-
-
+```
 
 Example message:
 
@@ -709,7 +700,6 @@ Waiting=0
 
 
 
-```
 
 
 # 7. Linux Character Device Driver Sequence Diagram
@@ -762,10 +752,8 @@ Device-->>Test: Driver data
 Test->>Device: close
 
 Device->>Driver: Release
-
-
-
 ```
+
 
 
 # 8. System Data Flow
@@ -824,10 +812,8 @@ LOGGER --> LOGFILE
 SYSTEM --> IPC
 
 IPC --> MONITOR
-
-
-
 ```
+
 
 
 # 9. Linux Kernel Interaction
@@ -860,8 +846,7 @@ DEVICE --> DRIVER
 DRIVER --> KERNEL
 
 KERNEL --> SYSTEM
-
-
+```
 
 The character driver provides:
 
@@ -899,7 +884,6 @@ parking_driver.ko
 
 
 
-```
 
 
 # 10. Overall System Workflow
@@ -984,10 +968,8 @@ HISTORY --> MENU
 
 
 INPUT --> EXIT
-
-
-
 ```
+
 
 
 # 11. Linux Device Driver Workflow
@@ -1030,10 +1012,8 @@ TEST --> READ
 TEST --> WRITE
 
 DEVICE --> UNLOAD
-
-
-
 ```
+
 
 
 **# 12. IOCTL Device-Control Design
@@ -1256,12 +1236,10 @@ DRIVERTEST --> DRIVER
 DRIVER --> KERNEL
 
 APP --> MONITOR
-
-
+```
 
 The architecture separates normal application execution from privileged kernel-level driver execution.
 
-```
 
 
 # 15. Training Concepts Demonstrated
