@@ -1,0 +1,30 @@
+# C/C++ build files
+*.o
+*.a
+*.so
+
+# Executables
+smart_parking
+parking_monitor
+parking_driver_test
+
+# Linux kernel driver build files
+kernel_driver/*.ko
+kernel_driver/*.o
+kernel_driver/*.mod
+kernel_driver/*.mod.c
+kernel_driver/.*.cmd
+kernel_driver/Module.symvers
+kernel_driver/modules.order
+
+# Runtime logs
+parking.log
+
+# Runtime IPC
+/tmp/smart_parking_fifo
+
+# VS Code
+.vscode/*.log
+
+# macOS
+.DS_Storetests/test_parking
